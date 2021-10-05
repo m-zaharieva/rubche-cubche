@@ -3,7 +3,7 @@ const express = require('express');
 
 // Local modules
 const handlebars = require('./config/handlebars.js');
-const router = require('./router.js');
+const router = require('./routes.js');
 
 // app
 const app = express();
