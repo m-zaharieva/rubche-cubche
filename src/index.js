@@ -9,6 +9,7 @@ const router = require('./routes.js');
 // app
 const app = express();
 
+app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.resolve(path.resolve(__dirname, 'static'))));
 handlebars(app);
 app.use(router);
