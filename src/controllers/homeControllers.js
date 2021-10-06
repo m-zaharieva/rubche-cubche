@@ -1,8 +1,15 @@
+//Modules
 const express = require('express');
 const router = express.Router();
 
+const cubeService = require('./../services/cubeService.js');
+
+
+// Actions
 const home = (req, res) => {
-    res.render('index');
+    let cubes = cubeService.getAll();
+    console.log(cubes);
+    res.render('index', { cubes });
 }
 
 const about = (req, res) => {
@@ -10,6 +17,7 @@ const about = (req, res) => {
 }
 
 
+// Routers
 router.get('/', home);
 router.get('/about', about);
 

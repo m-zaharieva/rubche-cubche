@@ -2,7 +2,7 @@ const uniqId = require('uniqid');
 
 class Cube {
     
-    static cubes = [
+    static #cubes = [
         {
             id: 'b43xjtskuf45k01',
             name: 'Magic Cube ',
@@ -20,16 +20,12 @@ class Cube {
         this.difficulty = difficulty;
     }
 
-    static getAll() {
-        return Cube.cubes.slice();
-    }
-
     static add(cube) {
-        Cube.cubes.push(cube);
+        Cube.#cubes.push(cube);
     }
 
-    static get () {
-        return Cube.cubes.slice();
+    static get cubes() {
+        return Cube.#cubes.slice();
     }
 }
 
