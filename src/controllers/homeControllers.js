@@ -8,7 +8,6 @@ const cubeService = require('./../services/cubeService.js');
 // Actions
 const home = (req, res) => {
     let cubes = cubeService.getAll();
-    console.log(cubes);
     res.render('index', { cubes });
 }
 
