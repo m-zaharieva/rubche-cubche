@@ -2,11 +2,22 @@ const Cube = require("../models/cube.js");
 
 
 const getAll = () => {
-    return Cube.cubes;
+    return Cube.find().lean();
 }
 
 const getOne = (id) => {
-    return Cube.cubes.filter(x => x.id == id);
+    return Cube.findOne(id);
+}
+
+const create = (name, description, imageUrl, difficulty) => {
+     const cube = new Cube({
+        name,
+        description,
+        imageUrl,
+        difficulty,
+    });
+    
+    return cube.save();
 }
 
 const search = (text, from, to) => {
@@ -31,6 +42,7 @@ let cubeService = {
     getAll,
     search,
     getOne,
+    create,
 }
 
 module.exports = cubeService;
