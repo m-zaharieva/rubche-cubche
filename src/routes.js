@@ -3,10 +3,12 @@ const router = express.Router();
 
 const homeController = require('./controllers/homeControllers.js');
 const cubesController = require('./controllers/cubesController.js')
+const accessoryController = require('./controllers/accessoryController.js');
 
 
 router.use(homeController);
 router.use('/cubes', cubesController);
+router.use('/accessory', accessoryController);
 
 
 const notFound = (req, res) => {
