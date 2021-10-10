@@ -1,12 +1,15 @@
+//Modules
 const router = require('express').Router();
 const cubeService = require('../services/cubeService.js');
 
 const Cube = require('./../models/cube.js');
 
+// GET 'Create a Cube' Page
 const getCreateCudePage = (req, res) => {
     res.render('create');
 }
 
+// POST Create a new cube
 const createCube = (req, res) => {
     let { name, description, imageUrl, difficulty } = req.body;
 
@@ -18,12 +21,12 @@ const createCube = (req, res) => {
         })
 }
 
+
 const cubeDetails = (req, res) => {
-    let id = req.params.id;
-    let cube = getOne(id)
-        .then((test)=> {
-            console.log('test')
-            console.log(test);
+    let id = req.params.id;    
+    cubeService.getOne(id)
+        .then((cube)=> {
+            console.log(cube);
             res.render(`details`, {cube});
         });
 }
