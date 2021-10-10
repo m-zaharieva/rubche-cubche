@@ -20,10 +20,12 @@ const createCube = (req, res) => {
 
 const cubeDetails = (req, res) => {
     let id = req.params.id;
-    let cube = cubeService.getAll().find(x => x.id == id);
-    console.log(cube);
-    res.render(`details`, {cube});
-
+    let cube = getOne(id)
+        .then((test)=> {
+            console.log('test')
+            console.log(test);
+            res.render(`details`, {cube});
+        });
 }
 
 
