@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const connectionString = 'mongodb://localhost:27017/Collections';
+function initDatabase(connectionString) {
+    return mongoose.connect(connectionString);
+} 
 
-const initDb = () => mongoose.connect(connectionString);
-
-module.exports = initDb;
+module.exports = initDatabase;

@@ -40,9 +40,9 @@ const search = (text, from, to) => {
 
 let cubeService = {
     getAll,
-    search,
     getOne,
     create,
+    search,
 }
 
 module.exports = cubeService;
