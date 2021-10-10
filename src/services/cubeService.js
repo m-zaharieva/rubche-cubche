@@ -6,7 +6,7 @@ const getAll = () => {
 }
 
 const getOne = (id) => {
-    return Cube.findOne(id);
+    return Cube.findOne({_id: id}).lean();
 }
 
 const create = (name, description, imageUrl, difficulty) => {
