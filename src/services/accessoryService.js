@@ -5,6 +5,10 @@ const getAll = () => {
     return Accessory.find({}).lean();
 }
 
+const getOne = (id) => {
+    return Accessory.findById(id).lean();
+}
+
 const getAllUnattached = (accessoryIds) => {
     return Accessory.find({_id: {$nin: accessoryIds}}).lean();
 }
@@ -21,6 +25,7 @@ const create = (name, description, imageUrl) => {
 
 const accessoryService = {
     getAll,
+    getOne,
     getAllUnattached,
     create, 
 }
