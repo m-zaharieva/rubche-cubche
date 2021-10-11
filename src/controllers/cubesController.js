@@ -1,8 +1,10 @@
 //Modules
 const router = require('express').Router();
-const cubeService = require('../services/cubeService.js');
 
 const Cube = require('./../models/cube.js');
+const cubeService = require('../services/cubeService.js');
+const accessoryService = require('../services/accessoryService.js');
+const cubeAccessoryController = require('./cubeAccessoryController.js');
 
 
 // Actions
@@ -17,25 +19,27 @@ const createCube = (req, res) => {
     let { name, description, imageUrl, difficulty } = req.body;
 
     cubeService.create(name, description, imageUrl, difficulty)
-        .then(() => {
+        .then((cube) => {
             res.redirect('/');
             res.end();
         });
 }
 
 // GET Cube Details 
-const cubeDetails = (req, res) => {
+const cubeDetails = async (req, res) => {
     let id = req.params.id;
-    cubeService.getOne(id)
-        .then((cube) => {
-            res.render(`details`, { cube });
-        });
+    let cube = await cubeService.getOne(id);
+    let accessories = await accessoryService.getAll();
+            res.render(`details`, { cube, accessories });
+        
 }
 
 
 router.get('/create', getCreateCudePage);
 router.post('/create', createCube);
-router.get('/details/:id', cubeDetails);
+router.get('/:id', cubeDetails);
+
+router.use('/:id/accessory', cubeAccessoryController);
 
 module.exports = router;
 
