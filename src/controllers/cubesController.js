@@ -29,8 +29,8 @@ const createCube = (req, res) => {
 const cubeDetails = async (req, res) => {
     let id = req.params.id;
     let cube = await cubeService.getOne(id);
-    let accessories = await accessoryService.getAll();
-            res.render(`details`, { cube, accessories });
+    console.log(cube);
+    res.render(`details`, { ...cube });
         
 }
 
