@@ -2,8 +2,6 @@ const Cube = require("../models/cube.js");
 const Accessory = require('./../models/Accessory.js');
 
 
-
-
 const getAll = () => Cube.find().lean();
 
 const getOne = (id) => Cube.findById(id).populate('accessories').lean();
@@ -43,7 +41,6 @@ const search = async (text, from, to) => {
 
     return result;
 }
-
 
 
 

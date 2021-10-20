@@ -7,10 +7,15 @@ const getRegisterPage = (req, res) => {
     res.render('auth/register');
 };
 
-const postRegisterPage = (req, res) => {
-    let {username, password, repeatPassword } = req.body;
-    let user = authService.createUser(username, password);
-    res.redirect('/auth/login');
+const postRegisterPage = async (req, res) => {
+    try {
+        let {username, password, repeatPassword } = req.body;
+        await authService.registerUser(username, password, repeatPassword);
+        res.redirect('/auth/login');
+
+    } catch (error) {
+        res.status(400).render('auth/register', {error: error.message})
+    }
 };
 
 const getLoginPage = (req, res) => {
@@ -18,10 +23,11 @@ const getLoginPage = (req, res) => {
 };
 
 
-
 router.get('/register', getRegisterPage);
 router.post('/register', postRegisterPage);
 router.get('/login', getLoginPage);
 router.post('/login', postLoginPage);
+
+
 
 module.exports = router;
