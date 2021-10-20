@@ -13,6 +13,12 @@ const postRegisterPage = (req, res) => {
     res.redirect('/auth/login');
 };
 
+const getLoginPage = (req, res) => {
+    res.render('auth/login');
+};
+
+
+
 router.get('/register', getRegisterPage);
 router.post('/register', postRegisterPage);
 router.get('/login', getLoginPage);
