@@ -39,11 +39,33 @@ const getCubeEditPage = async (req, res) => {
     res.render('cube/edit', { ...cube });
 }
 
+const postCubeEditPage = (req, res) => {
+    let {name, description, imageUrl, difficulty} = req.body;
+    let id = req.params.id;
+    console.log(id);
+
+    cubeService.edit(id, name, description, imageUrl, difficulty)
+        .then(cube => {
+            if (!cube) {
+                return res.status(400).redirect('404');
+            }
+
+            cube.save();
+            res.redirect(`/cube/${id}`);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
+}
+
 
 router.get('/create', getCreateCudePage);
 router.post('/create', createCube);
 router.get('/:id', cubeDetails);
-router.get('/:id/edit', getCubeEditPage)
+router.get('/:id/edit', getCubeEditPage);
+router.post('/:id/edit', postCubeEditPage);
+
 
 router.use('/:id/accessory', cubeAccessoryController);
 
