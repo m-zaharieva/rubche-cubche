@@ -24,7 +24,7 @@ const auth = (req, res, next) => {
 
 const isAuth = (req, res, next) => {
     if(!req.user) {
-        return res.status(400).redirect('login');
+        return res.status(400).redirect('/auth/login');
     }
     next();
 }
