@@ -22,7 +22,7 @@ const edit = (id, name, description, imageUrl, difficulty) => {
 }
 
 const deleteCube = (id) => {
-    Cube.findByIdAndDelete(id);
+    return Cube.findByIdAndDelete(id);
 }
 
 const attachAccessory = async (cubeId, accessoryId) => {
