@@ -21,6 +21,10 @@ const edit = (id, name, description, imageUrl, difficulty) => {
     return Cube.findOneAndUpdate({_id: id}, {name, description, imageUrl, difficulty});
 }
 
+const deleteCube = (id) => {
+    Cube.findByIdAndDelete(id);
+}
+
 const attachAccessory = async (cubeId, accessoryId) => {
     const cube = await Cube.findById(cubeId);
     const accessory = await Accessory.findById(accessoryId);
@@ -55,6 +59,7 @@ let cubeService = {
     attachAccessory,
     search,
     edit,
+    deleteCube,
 }
 
 module.exports = cubeService;

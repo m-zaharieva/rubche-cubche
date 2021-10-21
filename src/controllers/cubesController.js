@@ -59,12 +59,19 @@ const postCubeEditPage = (req, res) => {
 
 }
 
+const getDeleteCubePage = async (req, res) => {
+    let id = req.params.id;
+    let cube = await cubeService.getOne(id);
+    res.render(`cube/delete`, {...cube});
+}
+
 
 router.get('/create', getCreateCudePage);
 router.post('/create', createCube);
 router.get('/:id', cubeDetails);
 router.get('/:id/edit', getCubeEditPage);
 router.post('/:id/edit', postCubeEditPage);
+router.get('/:id/delete', getDeleteCubePage);
 
 
 router.use('/:id/accessory', cubeAccessoryController);
