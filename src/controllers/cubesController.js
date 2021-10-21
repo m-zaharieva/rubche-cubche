@@ -16,10 +16,13 @@ const getCreateCudePage = (req, res) => {
 
 // POST Create a new cube
 const createCube = (req, res) => {
-    let { name, description, imageUrl, difficulty } = req.body;
+    let user = req.user;
+    console.log(user);
+    let { name, description, imageUrl, difficulty} = req.body;
 
-    cubeService.create(name, description, imageUrl, difficulty)
+    cubeService.create(name, description, imageUrl, difficulty, user._id )
         .then((cube) => {
+            console.log(cube);
             res.redirect('/');
             res.end();
         });
