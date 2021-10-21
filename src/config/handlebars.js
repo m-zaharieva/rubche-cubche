@@ -9,4 +9,5 @@ const initHandlebars = (app) => {
     app.set('view engine', 'hbs');
 };
 
+
 module.exports = initHandlebars;
