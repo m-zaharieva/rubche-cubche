@@ -10,12 +10,10 @@ const auth = (req, res, next) => {
 
     jwtVerify(token, SECRET)
         .then(decodedToken => {
-            if (decodedToken) {
-                res.user = decodedToken;
-                next();
-            } else {
-                return res.status(400).redirect('/auth/login');
-            }
+            req.user = decodedToken;
+            res.locals.user = decodedToken;
+            next();
+
         })
         .catch(err => {
             return res.status(400).redirect('auth/login');
@@ -24,7 +22,7 @@ const auth = (req, res, next) => {
 
 const isAuth = (req, res, next) => {
     if(!req.user) {
-        return res.status(400).redirect('/auth/login');
+        return res.status(401).redirect('/auth/login');
     }
     next();
 }
