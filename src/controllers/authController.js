@@ -47,12 +47,16 @@ const postLoginPage = (req, res) => {
         })
 };
 
-
+const logout = (req, res) => {
+    res.clearCookie(TOKEN_COOKIE_NAME);
+    res.redirect('/');
+}
 
 router.get('/register', getRegisterPage);
 router.post('/register', postRegisterPage);
 router.get('/login', getLoginPage);
 router.post('/login', postLoginPage);
+router.get('/logout', logout);
 
 
 
