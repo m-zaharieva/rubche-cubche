@@ -1,7 +1,6 @@
 //Modules
 const router = require('express').Router();
 
-const Cube = require('./../models/cube.js');
 const cubeService = require('../services/cubeService.js');
 const cubeAccessoryController = require('./cubeAccessoryController.js');
 const { isAuth } = require('./../middlewares/authMiddleware.js');
@@ -18,14 +17,18 @@ const getCreateCudePage = (req, res) => {
 // POST Create a new cube
 const createCube = (req, res) => {
     let user = req.user;
-    console.log(user);
-    let { name, description, imageUrl, difficulty} = req.body;
+    let { name, description, imageUrl, difficulty } = req.body;
 
-    cubeService.create(name, description, imageUrl, difficulty, user._id )
+    cubeService.create(name, description, imageUrl, difficulty, user._id)
         .then((cube) => {
             console.log(cube);
             res.redirect('/');
             res.end();
+        })
+        .catch(error => {
+            let errors = Object.keys(error.errors).map(v => error.errors[v].message);
+            console.log(errors);
+            res.status(400).render('create', { error: errors });
         });
 }
 
@@ -34,7 +37,7 @@ const cubeDetails = async (req, res) => {
     let id = req.params.id;
     let cube = await cubeService.getOne(id);
     let isOwn = req.user && cube.creatorId == req.user._id;
-    res.render(`cube/details`, { ...cube, isOwn});
+    res.render(`cube/details`, { ...cube, isOwn });
 
 }
 
@@ -45,7 +48,7 @@ const getCubeEditPage = async (req, res) => {
 }
 
 const postCubeEditPage = (req, res) => {
-    let {name, description, imageUrl, difficulty} = req.body;
+    let { name, description, imageUrl, difficulty } = req.body;
     let id = req.params.id;
     console.log(id);
 
@@ -67,12 +70,16 @@ const postCubeEditPage = (req, res) => {
 const getDeleteCubePage = async (req, res) => {
     let id = req.params.id;
     let cube = await cubeService.getOne(id);
-    res.render(`cube/delete`, {...cube});
+    res.render(`cube/delete`, { ...cube });
 };
 
 const postDeleteCubePage = async (req, res) => {
     let id = req.params.id;
-    await cubeService.deleteCube(id);
+    try {
+        await cubeService.deleteCube(id);
+    } catch (error) {
+        res.status(400).render('cube/details', { error: [error] });
+    }
 
     res.redirect('/');
 };
@@ -87,7 +94,7 @@ router.get('/:id/delete', isAuth, isCubeOwner, getDeleteCubePage);
 router.post('/:id/delete', isAuth, isCubeOwner, postDeleteCubePage);
 
 
-router.use('/:id/accessory', cubeAccessoryController);
+router.use('/:id/accessory', isAuth, isCubeOwner, cubeAccessoryController);
 
 module.exports = router;
 
