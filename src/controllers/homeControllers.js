@@ -9,6 +9,9 @@ const home = (req, res) => {
     const cubes = cubeService.getAll()
         .then(cubes => {
             res.render('index', { cubes });
+        })
+        .catch(error => {
+            res.status(400).render('index', { error: error.message });
         });
 }
 
@@ -18,11 +21,17 @@ const about = (req, res) => {
 
 const search = async (req, res) => {
     let { search, from, to } = req.query;
-    let cubes = await cubeService.search(search, from, to);
-    res.render('index', {
-        title: 'RESULTS', 
-        cubes
-    })
+
+    try {
+        let cubes = await cubeService.search(search, from, to);
+        res.render('index', {
+            title: 'RESULTS', 
+            cubes,
+        });
+    } catch (error) {
+        res.status(400).render('index', { error: error.message });
+    }
+    
 }
 
 
