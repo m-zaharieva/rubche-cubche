@@ -6,7 +6,7 @@ const { SECRET } = require('./../constants.js');
 
 
 const registerUser = (username, password, repeatPassword) => {
-    return User.create({ username, password });
+    return User.create({ username, password, repeatPassword});
 };
 
 const loginUser = (username, password) => {
@@ -23,9 +23,7 @@ const loginUser = (username, password) => {
         })
         .catch(() => {
             return null;
-        })
-
-
+        });
 }
 
 const createToken = function (user) {
