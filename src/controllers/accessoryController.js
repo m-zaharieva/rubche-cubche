@@ -11,6 +11,10 @@ router.post('/create', (req, res) => {
     accessoryService.create(name, description, imageUrl)
         .then(() => {
             res.redirect('/');
+        })
+        .catch(error => {
+            let errors = Object.keys(error.errors).map(v => error.errors[v].message);
+            res.status(400).render('accessory/create', { error: errors });
         });
 })
 

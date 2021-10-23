@@ -23,11 +23,7 @@ router.post('/add', (req, res) => {
         then((cube) => {
             console.log(cube);
             res.redirect(`/cube/${cubeId}`);
-        })
-
-
-
-
+        });
 });
 
 
